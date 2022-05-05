@@ -1,9 +1,28 @@
+import { useState, useEffect } from 'react'
 import { MenuIcon } from '@heroicons/react/solid'
 
 const Navbar = ()=>{
+
+  const [color, setColor] = useState(true)
+  const changeColor = ()=>{
+    if(window.scrollY > 75){
+      setColor(true)
+    }else{
+      setColor(false)
+    }
+  }
+
+  useEffect(()=>{
+    window.addEventListener('scroll', changeColor)
+    return ()=>{
+      window.removeEventListener('scroll', changeColor)
+    }
+  }, [])
+
   return (
-    <nav className="flex items-center justify-between max-w-7xl bg-purple-700 text-white p-4 m-auto">
-      <div className="text-2xl"><a href="/">Abdulrahman <span>Hamad</span></a></div>
+    <nav 
+      className={`flex items-center justify-between ${color && 'bg-purple-700'} max-w-7xl sticky top-0 text-white p-4 mx-auto z-50 transition duration-200 ease-in`}>
+      <div className="text-2xl"><a href="/">Abdulrahman <span className={`${color ? 'text-white' : 'text-purple-700'} transition duration-200`}>Hamad</span></a></div>
       
       <div className="">
         <ul class="hidden md:inline-flex items-center space-x-2 hidden">
