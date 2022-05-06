@@ -1,5 +1,6 @@
-import './App.css';
-import Hero from './components/Hero';
+import './App.css'
+import About from './components/About'
+import Hero from './components/Hero'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -9,6 +10,10 @@ function App() {
       <Navbar />
 
       <Hero />
+
+      <div className="h-screen"></div>
+
+      <About />
 
     </div>
   );

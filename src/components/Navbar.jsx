@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { MenuAlt2Icon, MenuAlt3Icon } from '@heroicons/react/solid'
 
 const NAVBAR_COMMON = "items-center w-full p-2 sticky top-0 text-white mx-auto z-50 transition duration-300 ease-in"
-const NAVBAR = "flex justify-between w-full"
+const NAVBAR = "inline-flex justify-between w-full m-0"
 const NAVBAR_MENU_COMMON = "items-center text-white"
-const NAVBAR_MENU = "flex flex-row space-x-2"
-const MOBILE_NAVBAR_MENU = "flex flex-col w-full p-3 space-y-3 text-2xl font-bold"
+const NAVBAR_MENU = "inline-flex flex-row space-x-2"
+const MOBILE_NAVBAR_MENU = "flex flex-col w-full p-3 space-y-3 text-2xl font-bold bg-black"
 
 const Navbar = ()=>{
 

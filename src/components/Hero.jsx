@@ -31,12 +31,12 @@ const Hero = ()=>{
       <div 
         className="flex items-center w-full h-screen" 
         style={{ backgroundImage: `url(${hero})`, backgroundRepeat: 'no-repeat' }}>
-      <div className="z-40 text-white max-w-7xl p-8 space-y-2">
-        <div className="text-xl">Hello! My name is...</div>
-        <div className="text-4xl">Abdulrahman Hamd</div>
-        <div className="text-2xl">and I'm an <span ref={el} className="text-purple-700"></span></div>
+      <div className="z-40 text-white p-8 space-y-2">
+        <div className="text-2xl">Hello! My name is...</div>
+        <div className="text-4xl font-bold">Abdulrahman Hamad</div>
+        <div className="text-3xl">and I'm an <span ref={el} className="text-purple-700"></span></div>
         <div><a href="/" 
-          className="bg-purple-700 px-3 py-2 rounded-xl shadow-xl hover:bg-transparent hover:border border-b border-purple-700 hover:text-purple-700 duration-200">
+          className="bg-purple-700 text-xl mt-2 px-3 py-2 rounded-xl shadow-xl hover:bg-transparent hover:border border-b border-purple-700 hover:text-purple-700 duration-200">
         Hire me
         </a></div>
       </div>
