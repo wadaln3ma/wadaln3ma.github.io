@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
-import { MenuIcon } from '@heroicons/react/solid'
+import { MenuAlt2Icon, MenuAlt3Icon } from '@heroicons/react/solid'
+
+const NAVBAR_COMMON = "items-center w-full p-2 sticky top-0 text-white mx-auto z-50 transition duration-300 ease-in"
+const NAVBAR = "flex justify-between w-full"
+const NAVBAR_MENU_COMMON = "items-center text-white"
+const NAVBAR_MENU = "flex flex-row space-x-2"
+const MOBILE_NAVBAR_MENU = "flex flex-col w-full p-3 space-y-3 text-2xl font-bold"
 
 const Navbar = ()=>{
 
@@ -19,14 +25,29 @@ const Navbar = ()=>{
     }
   }, [])
 
+  const [showNavbar, setShowNavbar] = useState(false)
+
   return (
     <nav 
-      className={`flex items-center justify-between ${color && 'bg-purple-700'} max-w-7xl sticky top-0 text-white p-4 mx-auto z-50 transition duration-200 ease-in`}>
-      <div className="text-2xl"><a href="/">Abdulrahman <span className={`${color ? 'text-white' : 'text-purple-700'} transition duration-200`}>Hamad</span></a></div>
+      className={`${NAVBAR_COMMON} ${color && !showNavbar && 'bg-purple-700'} sm:${NAVBAR}`}>
+
+      <div className="relative m-2">
+
+        <div className={`text-2xl ${showNavbar && 'hidden'}`}><a href="/">Abdulrahman <span className={`${color ? 'text-white' : 'text-purple-700'} transition duration-200`}>Hamad</span></a></div>
       
-      <div className="">
-        <ul class="hidden md:inline-flex items-center space-x-2 hidden">
-          <li><a href="#home" className="menu-btn">Home</a></li>
+
+        <div className="md:hidden absolute top-0 right-0" onClick={()=> setShowNavbar(!showNavbar)}>
+          {showNavbar ?
+            <MenuAlt2Icon className="text-white w-6 hover:scale-110 transition duration-200" />
+            :
+            <MenuAlt3Icon className="text-white w-6 hover:scale-110 transition duration-200"/>
+          }
+        </div>
+      </div>
+      
+      <div>
+
+        <ul class={`${NAVBAR_MENU_COMMON} ${showNavbar ? MOBILE_NAVBAR_MENU : 'hidden'} sm:${NAVBAR_MENU}`}>
           <li><a href="#about" className="menu-btn">About</a></li>
           <li><a href="#services" className="menu-btn">Services</a></li>
           <li><a href="#skills" className="menu-btn">Skills</a></li>
@@ -34,7 +55,6 @@ const Navbar = ()=>{
           <li><a href="#contact" className="menu-btn">Contact</a></li>
         </ul>
         
-        <MenuIcon className="text-white w-6 md:hidden"/>
       </ div>
   </nav>
 )}

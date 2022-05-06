@@ -27,40 +27,20 @@ const Hero = ()=>{
   }, [])
 
   return (
-    <section className="relative">
+    <section className="absolute top-0 w-full h-screen">
       <div 
-        className="flex items-center w-full h-screen absolute top-[-75px]" 
+        className="flex items-center w-full h-screen" 
         style={{ backgroundImage: `url(${hero})`, backgroundRepeat: 'no-repeat' }}>
       <div className="z-40 text-white max-w-7xl p-8 space-y-2">
         <div className="text-xl">Hello! My name is...</div>
         <div className="text-4xl">Abdulrahman Hamd</div>
         <div className="text-2xl">and I'm an <span ref={el} className="text-purple-700"></span></div>
-        <div><a href="https://www.linkedin.com/" 
-        className="bg-purple-700 px-3 py-2 rounded-xl shadow-xl">
+        <div><a href="/" 
+          className="bg-purple-700 px-3 py-2 rounded-xl shadow-xl hover:bg-transparent hover:border border-b border-purple-700 hover:text-purple-700 duration-200">
         Hire me
         </a></div>
       </div>
-
     </div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
-      <div>hello</div>
   </section>
 )}
 
