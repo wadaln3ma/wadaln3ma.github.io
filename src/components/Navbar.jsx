@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import { MenuAlt2Icon, MenuAlt3Icon } from '@heroicons/react/solid'
 
-const NAVBAR_COMMON = "items-center w-full p-2 sticky top-0 text-white mx-auto z-50 transition duration-300 ease-in"
-const NAVBAR = "inline-flex justify-between w-full m-0"
+const NAVBAR_COMMON = "items-center w-full sticky top-0 text-white mx-auto z-50 transition duration-300 ease-in"
 const NAVBAR_MENU_COMMON = "items-center text-white"
-const NAVBAR_MENU = "inline-flex flex-row space-x-2"
+const NAVBAR_MENU = "inline-flex flex-row space-x-2 text-red"
 const MOBILE_NAVBAR_MENU = "flex flex-col w-full p-3 space-y-3 text-2xl font-bold bg-black"
 
 const Navbar = ()=>{
@@ -29,14 +28,14 @@ const Navbar = ()=>{
 
   return (
     <nav 
-      className={`${NAVBAR_COMMON} ${color && !showNavbar && 'bg-purple-700'} sm:${NAVBAR}`}>
+      className={`${NAVBAR_COMMON} ${color && !showNavbar && 'bg-purple-700'} sm:inline-flex sm:justify-between sm:p-2`}>
 
-      <div className="relative m-2">
+      <div className="relative">
 
-        <div className={`text-2xl ${showNavbar && 'hidden'}`}><a href="/">Abdulrahman <span className={`${color ? 'text-white' : 'text-purple-700'} transition duration-200`}>Hamad</span></a></div>
+        <div className={`px-2 py-5 text-2xl font-bold ${showNavbar && 'hidden'}`}><a href="/">Abdulrahman <span className={`${color ? 'text-white' : 'text-purple-700'} transition duration-200`}>Hamad</span></a></div>
       
 
-        <div className="md:hidden absolute top-0 right-0" onClick={()=> setShowNavbar(!showNavbar)}>
+        <div className="md:hidden absolute top-0 right-0 px-2 py-5" onClick={()=> setShowNavbar(!showNavbar)}>
           {showNavbar ?
             <MenuAlt2Icon className="text-white w-6 hover:scale-110 transition duration-200" />
             :
