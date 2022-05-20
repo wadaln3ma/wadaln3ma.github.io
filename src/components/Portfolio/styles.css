@@ -23,7 +23,7 @@
 }
 
 .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: purple;
+  background-color: crimson;
   width : 12px;
   height : 12px;
 }

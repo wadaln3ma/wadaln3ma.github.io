@@ -28,11 +28,11 @@ const Navbar = ()=>{
 
   return (
     <nav 
-      className={`${NAVBAR_COMMON} ${color && !showNavbar && 'bg-purple-700'} sm:inline-flex sm:justify-between sm:p-2`}>
+      className={`${NAVBAR_COMMON} ${color && !showNavbar && 'bg-primary'} sm:inline-flex sm:justify-between sm:p-2`}>
 
       <div className="relative">
 
-        <div className={`px-2 py-5 text-2xl font-bold ${showNavbar && 'hidden'}`}><a href="/">Abdulrahman <span className={`${color ? 'text-white' : 'text-purple-700'} transition duration-200`}>Hamad</span></a></div>
+        <div className={`px-2 py-5 text-2xl font-bold ${showNavbar && 'hidden'}`}><a href="/">Abdulrahman <span className={`${color ? 'text-white' : 'primary'} transition duration-200`}>Hamad</span></a></div>
       
 
         <div className="md:hidden absolute top-0 right-0 px-2 py-5" onClick={()=> setShowNavbar(!showNavbar)}>
@@ -46,7 +46,7 @@ const Navbar = ()=>{
       
       <div>
 
-        <ul class={`${NAVBAR_MENU_COMMON} ${showNavbar ? MOBILE_NAVBAR_MENU : 'hidden'} sm:${NAVBAR_MENU}`}>
+        <ul className={`${NAVBAR_MENU_COMMON} ${showNavbar ? MOBILE_NAVBAR_MENU : 'hidden'} sm:${NAVBAR_MENU}`}>
           <li><a href="#about" className="menu-btn">About</a></li>
           <li><a href="#services" className="menu-btn">Services</a></li>
           <li><a href="#skills" className="menu-btn">Skills</a></li>

@@ -11,5 +11,13 @@
 }
 
 .menu-btn{
-    @apply text-xl cursor-pointer hover:text-purple-700 transition duration-100;
+    @apply text-xl cursor-pointer hover:text-primary transition duration-100;
+}
+
+.sub-title{
+  @apply text-center text-primary overflow-hidden before:h-[2px] after:h-[2px] after:bg-black after:inline-block after:relative after:align-middle after:w-[40px] before:bg-black before:inline-block before:relative before:align-middle before:w-[40px] before:right-2 after:left-2 text-base font-semibold p-4;
+}
+
+.form-input{
+  @apply w-full ring-[1px] ring-gray-400 focus:outline-none rounded-lg py-2 px-4 mb-4 font-bold hover:ring-[1px] hover:ring-primary;
 }

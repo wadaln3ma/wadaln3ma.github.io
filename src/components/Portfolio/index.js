@@ -15,7 +15,7 @@ const Portfolio = ()=>{
 
       <div className="text-center">
         <h2 className="text-4xl font-bold text-white">My Portfolio</h2>
-        <h1 class="text-center text-purple-500 overflow-hidden before:h-[3px] after:h-[3px] after:bg-white after:inline-block after:relative after:align-middle after:w-1/6 before:bg-white before:inline-block before:relative before:align-middle before:w-1/6 before:right-2 after:left-2 text-base font-semibold p-4">
+        <h1 className="sub-title before:bg-white after:bg-white">
             some projects
         </h1>
       </div>
@@ -42,8 +42,8 @@ const Portfolio = ()=>{
         navigation={ false}
         className="mySwiper"
       >
-        {data.map(item =>(
-          <SwiperSlide>
+        {data.map((item, i) =>(
+          <SwiperSlide key={i}>
             <PortfolioItem item={item} />
           </SwiperSlide>
         ))}
