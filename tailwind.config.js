@@ -7,6 +7,10 @@ module.exports = {
       colors: {
         primary : "crimson",
       },
+      fontFamitly: {
+        Ubuntu : ["Ubuntu", "sans-serif"],
+        Poppins : ["Poppins", "sans-serif"],
+      },
     },
   },
   plugins: [],

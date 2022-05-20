@@ -6,7 +6,7 @@ const Skills = ()=>{
 
 
       <div className="text-center">
-        <h2 className="text-4xl font-bold">My Skills</h2>
+        <h2 className="text-4xl font-poppins font-bold">My Skills</h2>
         <h1 className="sub-title">
             what i know
         </h1>

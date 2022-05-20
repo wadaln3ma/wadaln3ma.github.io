@@ -14,7 +14,7 @@ const Portfolio = ()=>{
     <section className="w-full bg-black py-20" id="projects">
 
       <div className="text-center">
-        <h2 className="text-4xl font-bold text-white">My Portfolio</h2>
+        <h2 className="text-4xl font-poppins font-bold text-white">My Portfolio</h2>
         <h1 className="sub-title before:bg-white after:bg-white">
             some projects
         </h1>

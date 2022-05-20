@@ -4,7 +4,7 @@ const Services = ()=>{
   return (
     <section className="bg-black flex flex-col items-center my-16 py-20">
       <div className="text-center">
-        <h2 className="text-4xl font-bold text-white">My Services</h2>
+        <h2 className="text-4xl font-poppins font-bold text-white">My Services</h2>
         <h1 className="sub-title before:bg-white after:bg-white">
             what i provide
         </h1>

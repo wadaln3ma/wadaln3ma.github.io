@@ -32,7 +32,7 @@ const Navbar = ()=>{
 
       <div className="relative">
 
-        <div className={`px-2 py-5 text-2xl font-bold ${showNavbar && 'hidden'}`}><a href="/">Abdulrahman <span className={`${color ? 'text-white' : 'primary'} transition duration-200`}>Hamad</span></a></div>
+        <div className={`px-2 py-5 text-2xl font-bold ${showNavbar && 'hidden'}`}><a href="/">Abdulrahman <span className={`${!color ? 'text-primary' : 'text-white'} transition duration-200`}>Hamad</span></a></div>
       
 
         <div className="md:hidden absolute top-0 right-0 px-2 py-5" onClick={()=> setShowNavbar(!showNavbar)}>
