@@ -21,3 +21,7 @@
 .form-input{
   @apply w-full ring-[1px] ring-gray-400 focus:outline-none rounded-lg py-2 px-4 mb-4 font-bold hover:ring-[1px] hover:ring-primary;
 }
+
+.bars{
+  @apply relative w-full h-[5px] bg-gray-300 before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:bg-primary;
+}
