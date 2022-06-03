@@ -2,7 +2,7 @@ import { FaUser, FaMapMarkerAlt, FaEnvelopeSquare } from 'react-icons/fa'
 
 const Contact = ()=>{
   return (
-    <section className="my-20" id="contact">
+    <section className="my-20 lg:mx-20" id="contact">
       <div className="text-center">
         <h2 className="text-4xl font-bold">Contact Me</h2>
         <h1 className="sub-title">
@@ -19,21 +19,21 @@ const Contact = ()=>{
               <FaUser className="text-primary text-2xl"/>
               <div className="info">
                 <div className="font-semibold">Name</div>
-                <div className="">Abdulrahman Hamad</div>
+                <div className="text-gray-500">Abdulrahman Hamad</div>
               </div>
             </div>
             <div className="flex items-center space-x-8 my-4">
               <FaMapMarkerAlt className="text-primary text-2xl"/>
               <div className="info">
                 <div className="font-semibold">Address</div>
-                <div className="">Riyadh - Saudi Arabia</div>
+                <div className="text-gray-500">Riyadh - Saudi Arabia</div>
               </div>
             </div>
             <div className="flex items-center space-x-8">
               <FaEnvelopeSquare className="text-primary text-2xl"/>
               <div className="info">
                 <div className="font-semibold">Email</div>
-                <div className="">wadaln3ma@gmail.com</div>
+                <div className="text-gray-500">wadaln3ma@gmail.com</div>
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@ const Contact = ()=>{
             </div>
             <div className="field textarea">
               <textarea cols="30" rows="10" placeholder="Message..." required 
-                className="w-full ring-[1px] ring-gray-400 focus:outline-none rounded-lg p-3 mb-4 font-bold hover:ring-primary">
+                className="w-full ring-[1px] ring-gray-400 focus:outline-none rounded-lg p-3 mb-4 font-bold hover:ring-primary h-40">
               </textarea>
             </div>
             <div className="button">

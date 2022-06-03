@@ -1,11 +1,11 @@
-import About from './components/About'
-import Hero from './components/Hero'
-import Navbar from './components/Navbar'
-import Services from './components/Services'
-import Portfolio from './components/Portfolio'
-import Contact from './components/Contact'
-import Skills from './components/Skills'
-import Footer from './components/Footer'
+import About from './components/about'
+import Hero from './components/hero'
+import Navbar from './components/navbar'
+import Services from './components/services'
+import Portfolio from './components/portfolio'
+import Contact from './components/contact'
+import Skills from './components/skills'
+import Footer from './components/footer'
 
 function App() {
   return (
@@ -15,7 +15,6 @@ function App() {
 
       <Hero />
 
-      <div className="h-screen"></div>
 
       <About />
 
