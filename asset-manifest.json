@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ab34df87.css",
+    "main.js": "/static/js/main.d0e6acb6.js",
+    "static/js/937.7b9cae23.chunk.js": "/static/js/937.7b9cae23.chunk.js",
+    "static/media/hulu.jpg": "/static/media/hulu.98ea3331475e0c5f90b2.jpg",
+    "static/media/airbnb.jpg": "/static/media/airbnb.ced44b5e56f84296b0b0.jpg",
+    "static/media/medium.jpg": "/static/media/medium.b44420ea8823c9824712.jpg",
+    "static/media/wallpaper.jpg": "/static/media/wallpaper.da1004ed14bfbfb50f8e.jpg",
+    "static/media/amazon.jpg": "/static/media/amazon.68cb9753a71ded36f59b.jpg",
+    "static/media/spotify.jpg": "/static/media/spotify.da13fa4fa7bb3ab94596.jpg",
+    "static/media/nadusjobs.jpg": "/static/media/nadusjobs.56528d0509c83086f306.jpg",
+    "static/media/facebook.jpg": "/static/media/facebook.94d3d7f500aad4b55d75.jpg",
+    "static/media/dashboard-react.jpg": "/static/media/dashboard-react.5c2af13fbb1a767049e9.jpg",
+    "static/media/CV_2022.pdf": "/static/media/CV_2022.2d3fb4483e2883781059.pdf",
+    "static/media/google.jpg": "/static/media/google.ced5f22b39fc9c894ddc.jpg",
+    "static/media/profile.jpg": "/static/media/profile.9409104068831e44794b.jpg",
+    "index.html": "/index.html",
+    "main.ab34df87.css.map": "/static/css/main.ab34df87.css.map",
+    "main.d0e6acb6.js.map": "/static/js/main.d0e6acb6.js.map",
+    "937.7b9cae23.chunk.js.map": "/static/js/937.7b9cae23.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ab34df87.css",
+    "static/js/main.d0e6acb6.js"
+  ]
+}
