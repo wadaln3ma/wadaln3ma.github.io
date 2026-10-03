@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abdulrahman Hamad | Surveying Engineer & Geospatial Developer</title>
+<meta name="description" content="Surveying engineer and geospatial developer in Riyadh. GIS, remote sensing, .NET and web mapping projects.">
+<meta property="og:title" content="Abdulrahman Hamad | Surveying Engineer & Geospatial Developer">
+<meta property="og:description" content="I measure the ground, then build the software that makes sense of it.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 4 28 26H4z' fill='none' stroke='%23E8C48A' stroke-width='3'/><circle cx='16' cy='19' r='2.5' fill='%23E2553B'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E2A33;        /* deep petrol: night field sheet */
+  --ink-2:#123540;
+  --contour:#2C5862;
+  --sand:#E8C48A;       /* Najd desert, index contours */
+  --paper:#EAF1EE;
+  --muted:#93B3B0;
+  --marker:#E2553B;     /* benchmark red, used sparingly */
+  --rule:rgba(147,179,176,.22);
+  --sans:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px));background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sand);outline-offset:3px;border-radius:2px}
+img{max-width:100%}
+
+/* ---------- top bar ---------- */
+.bar{position:fixed;top:0;left:0;right:0;z-index:10;padding-top:env(safe-area-inset-top,0px);
+  background:linear-gradient(var(--ink) 30%,rgba(14,42,51,0));}
+.bar-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:18px 24px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-stretch:115%;letter-spacing:.01em}
+.mark svg{flex:none}
+.nav{display:flex;gap:26px;font-size:15px}
+.nav a{text-decoration:none;color:var(--muted);transition:color .15s}
+.nav a:hover{color:var(--paper)}
+@media (max-width:720px){.nav{display:none}}
+
+/* ---------- hero: the contour sheet ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;cursor:crosshair}
+#topo{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(14,42,51,.15) 0%,rgba(14,42,51,0) 40%,rgba(14,42,51,.85) 82%,var(--ink) 100%)}
+.hero-in{position:relative;z-index:2;max-width:1180px;width:100%;margin:0 auto;padding:0 24px 9vh}
+.hero h1{margin:0;font-weight:800;font-stretch:125%;line-height:.92;letter-spacing:-.01em;
+  font-size:clamp(46px,9.2vw,132px);max-width:11ch}
+.hero p.lede{margin:28px 0 0;max-width:34ch;font-size:clamp(19px,2.1vw,25px);line-height:1.4;font-weight:400;color:var(--paper)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;font:600 15px/1 var(--sans);text-decoration:none;border-radius:999px;transition:background .15s,color .15s}
+.btn-solid{background:var(--sand);color:var(--ink)}
+.btn-solid:hover{background:#F3D6A6}
+.btn-line{border:1px solid var(--rule);color:var(--paper);background:rgba(14,42,51,.5)}
+.btn-line:hover{border-color:var(--sand)}
+
+.readout{position:absolute;z-index:3;right:24px;bottom:9vh;font:400 13px/1.7 var(--mono);color:var(--muted);
+  text-align:right;background:rgba(14,42,51,.72);padding:12px 14px;border-left:2px solid var(--sand);min-width:220px}
+.readout b{color:var(--paper);font-weight:500}
+@media (max-width:900px){.readout{position:relative;right:auto;bottom:auto;text-align:left;margin-top:30px;display:inline-block}}
+.cross{position:absolute;z-index:2;width:34px;height:34px;margin:-17px 0 0 -17px;pointer-events:none;opacity:0;transition:opacity .2s}
+.cross::before,.cross::after{content:"";position:absolute;background:var(--sand)}
+.cross::before{left:16px;top:0;width:2px;height:34px}
+.cross::after{top:16px;left:0;height:2px;width:34px}
+.hero:hover .cross{opacity:1}
+
+/* ---------- sheet sections ---------- */
+main{position:relative;z-index:2}
+.sheet{max-width:1180px;margin:0 auto;padding:110px 24px 0;display:grid;grid-template-columns:240px 1fr;gap:48px}
+.sheet>h2{margin:0;font-weight:700;font-stretch:112%;font-size:28px;line-height:1.15;position:sticky;top:96px;align-self:start}
+.sheet>h2 small{display:block;margin-top:10px;font:400 15px/1.5 var(--sans);font-stretch:100%;color:var(--muted);max-width:22ch}
+@media (max-width:820px){.sheet{grid-template-columns:1fr;gap:26px;padding-top:80px}.sheet>h2{position:static}}
+
+.about p{margin:0 0 18px;max-width:62ch;font-size:19px}
+.about p:first-child{font-size:clamp(22px,2.4vw,28px);line-height:1.38;font-weight:500;max-width:30ch}
+
+/* legend: skills as a map legend */
+.legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--rule)}
+.legend>div{padding:22px 24px 24px 0;border-bottom:1px solid var(--rule)}
+.legend>div:nth-child(odd){padding-right:32px;border-right:1px solid var(--rule)}
+.legend>div:nth-child(even){padding-left:32px}
+.legend h3{display:flex;align-items:center;gap:12px;margin:0 0 10px;font-size:18px;font-weight:650}
+.legend p{margin:0;color:var(--muted);font-size:16px}
+@media (max-width:640px){.legend{grid-template-columns:1fr}.legend>div:nth-child(n){padding:20px 0;border-right:0}}
+
+/* projects */
+.projects{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.project{display:grid;grid-template-columns:1fr auto;gap:8px 32px;padding:30px 0;border-bottom:1px solid var(--rule)}
+.project h3{margin:0;font-size:clamp(22px,2.4vw,28px);font-weight:700;font-stretch:110%;line-height:1.2}
+.project .desc{grid-column:1;margin:4px 0 0;max-width:60ch;color:var(--paper)}
+.project .stack{grid-column:1;margin:10px 0 0;color:var(--muted);font-size:15px}
+.project .side{grid-column:2;grid-row:1 / span 3;display:flex;flex-direction:column;align-items:flex-end;gap:12px;text-align:right}
+.status{font-size:14px;color:var(--muted);display:inline-flex;align-items:center;gap:8px}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.status.live::before{background:var(--sand)}
+.links{display:flex;gap:16px;font-size:15px;font-weight:600}
+.links a{text-decoration:none;border-bottom:1px solid var(--sand);padding-bottom:2px}
+.links a:hover{color:var(--sand)}
+@media (max-width:640px){.project{grid-template-columns:1fr}.project .side{grid-column:1;grid-row:auto;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;gap:18px;margin-top:12px}}
+
+/* experience: traverse line */
+.traverse{list-style:none;margin:0;padding:0 0 0 30px;position:relative}
+.traverse::before{content:"";position:absolute;left:7px;top:10px;bottom:10px;border-left:2px dashed var(--contour)}
+.traverse li{position:relative;padding:0 0 36px}
+.traverse li:last-child{padding-bottom:0}
+.traverse li::before{content:"";position:absolute;left:-30px;top:6px;width:0;height:0;
+  border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--contour)}
+.traverse li:first-child::before{border-bottom-color:var(--marker)}
+.traverse h3{margin:0;font-size:20px;font-weight:650}
+.traverse .meta{margin:2px 0 8px;color:var(--muted);font-size:15px}
+.traverse p{margin:0;max-width:60ch}
+
+/* certifications */
+.certs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}
+.certs li{padding:16px 0;border-bottom:1px solid var(--rule)}
+.certs strong{display:block;font-weight:600}
+.certs span{color:var(--muted);font-size:15px}
+@media (max-width:640px){.certs{grid-template-columns:1fr}}
+
+/* footer: survey plan title block */
+footer{max-width:1180px;margin:130px auto 0;padding:0 24px 60px}
+.title-block{display:grid;grid-template-columns:2fr 1fr 1fr;border:1px solid var(--muted)}
+.title-block>div{padding:18px 20px;border-right:1px solid var(--rule)}
+.title-block>div:last-child{border-right:0}
+.title-block .cap{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.title-block .big{font-size:clamp(24px,3vw,36px);font-weight:800;font-stretch:120%;line-height:1.05}
+.title-block .row2{grid-column:1 / -1;border-top:1px solid var(--rule);border-right:0;display:flex;flex-wrap:wrap;gap:12px 36px}
+.title-block a{text-decoration:none;border-bottom:1px solid var(--sand)}
+.title-block a:hover{color:var(--sand)}
+.mono{font-family:var(--mono);font-size:14px}
+@media (max-width:720px){.title-block{grid-template-columns:1fr 1fr}.title-block>div:first-child{grid-column:1 / -1;border-right:0;border-bottom:1px solid var(--rule)}}
+.fine{margin-top:18px;color:var(--muted);font-size:14px}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="mark" href="#top" aria-label="Abdulrahman Hamad, home">
+      <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 28 26H4z" fill="none" stroke="#E8C48A" stroke-width="3"/><circle cx="16" cy="19" r="2.5" fill="#E2553B"/></svg>
+      A. Hamad
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top" aria-label="Introduction">
+  <canvas id="topo" aria-hidden="true"></canvas>
+  <div class="cross" id="cross" aria-hidden="true"></div>
+  <div class="hero-in">
+    <h1>Abdulrahman Hamad</h1>
+    <p class="lede">Surveying engineer and geospatial developer. I measure the ground, then build the software that makes sense of it.</p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="#projects">See my projects</a>
+      <a class="btn btn-line" href="mailto:wadaln3ma@gmail.com">Email me</a>
+      <a class="btn btn-line" href="https://www.linkedin.com/in/wadaln3ma">LinkedIn</a>
+    </div>
+    <div class="readout" id="readout" aria-live="off">
+      <div>N <b id="lat">24.71360°</b>&nbsp; E <b id="lon">46.67530°</b></div>
+      <div>Elev <b id="elev">612</b> m&nbsp; Riyadh</div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section class="sheet" id="about">
+    <h2>About</h2>
+    <div class="about">
+      <p>I work between the total station and the code editor, and I don't treat them as two separate jobs.</p>
+      <p>I'm a registered surveying engineer with the Saudi Council of Engineers and a certified Project Management Professional (PMP), based in Riyadh. My field work covers topographic, cadastral and engineering surveys with GNSS/RTK, total stations and UAVs.</p>
+      <p>On the software side I build web GIS applications, spatial databases and remote sensing workflows, and I'm currently completing Microsoft's .NET full-stack developer certificate to bring C# and ASP.NET Core into that toolkit.</p>
+    </div>
+  </section>
+
+  <section class="sheet" id="skills">
+    <h2>Skills<small>Read it like a map legend.</small></h2>
+    <div class="legend">
+      <div>
+        <h3><svg width="18" height="16" viewBox="0 0 18 16" aria-hidden="true"><path d="M9 1 17 15H1z" fill="none" stroke="#E2553B" stroke-width="2"/></svg>Surveying</h3>
+        <p>GNSS/RTK, total stations, UAV photogrammetry, Civil 3D surfaces and corridors, Trimble Business Center, Agisoft Metashape</p>
+      </div>
+      <div>
+        <h3><svg width="18" height="16" viewBox="0 0 18 16" aria-hidden="true"><path d="M1 12c4-6 8 2 16-8M1 15c5-5 9 1 16-6" fill="none" stroke="#E8C48A" stroke-width="2"/></svg>GIS and spatial data</h3>
+        <p>ArcGIS Pro, QGIS, PostGIS, GeoServer, GDAL/OGR, spatial SQL, coordinate reference systems</p>
+      </div>
+      <div>
+        <h3><svg width="18" height="16" viewBox="0 0 18 16" aria-hidden="true"><rect x="1" y="1" width="7" height="6" fill="#2C5862"/><rect x="10" y="1" width="7" height="6" fill="#E8C48A"/><rect x="1" y="9" width="7" height="6" fill="#E8C48A"/><rect x="10" y="9" width="7" height="6" fill="#2C5862"/></svg>Remote sensing</h3>
+        <p>Sentinel-2, Landsat, NDVI and spectral indices, change detection, raster analysis with rasterio</p>
+      </div>
+      <div>
+        <h3><svg width="18" height="16" viewBox="0 0 18 16" aria-hidden="true"><path d="M6 3 1 8l5 5M12 3l5 5-5 5" fill="none" stroke="#93B3B0" stroke-width="2"/></svg>Software</h3>
+        <p>C#, ASP.NET Core, Blazor, Python (geopandas), TypeScript, React, Next.js, Node.js, MapLibre, Leaflet</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="projects">
+    <h2>Projects<small>Built on public and open data.</small></h2>
+    <ul class="projects" id="project-list"></ul>
+  </section>
+
+  <section class="sheet" id="experience">
+    <h2>Experience</h2>
+    <ol class="traverse">
+      <li>
+        <h3>Surveying Engineer, Alqotr</h3>
+        <div class="meta">Riyadh, June 2024 to present</div>
+        <p>Topographic, cadastral and engineering surveys for government and infrastructure clients, from field data collection to final deliverables.</p>
+      </li>
+      <li>
+        <h3>Surveying Engineer, Brooj Al-Omran Consulting Engineering</h3>
+        <div class="meta">Makkah</div>
+        <p>Survey and mapping work for consulting engineering projects.</p>
+      </li>
+      <li>
+        <h3>Surveying Engineer, Al-Jammar International Contracting</h3>
+        <div class="meta">Al-Ahsa</div>
+        <p>Construction surveying, setting out and quantity surveys on contracting projects.</p>
+      </li>
+      <li>
+        <h3>Surveyor, Sudan Survey Authority</h3>
+        <div class="meta">Sudan</div>
+        <p>National surveying and mapping work.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sheet" id="certs">
+    <h2>Credentials</h2>
+    <ul class="certs">
+      <li><strong>Project Management Professional (PMP)</strong><span>Project Management Institute</span></li>
+      <li><strong>Registered Surveying Engineer</strong><span>Saudi Council of Engineers</span></li>
+      <li><strong>.NET Full-Stack Developer</strong><span>Microsoft, in progress</span></li>
+      <li><strong>B.Sc. Surveying Engineering</strong><span>Sudan University of Science and Technology</span></li>
+      <li><strong>Data Science Professional Certificate</strong><span>IBM</span></li>
+      <li><strong>Geographic Information Systems</strong><span>UC Davis</span></li>
+    </ul>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="title-block">
+    <div><span class="cap">Drawing title</span><div class="big">Let's work together</div></div>
+    <div><span class="cap">Surveyed by</span>A. Hamad, PMP</div>
+    <div><span class="cap">Datum</span><span class="mono">WGS 84</span></div>
+    <div class="row2">
+      <span><span class="cap">Email</span><a href="mailto:wadaln3ma@gmail.com">wadaln3ma@gmail.com</a></span>
+      <span><span class="cap">LinkedIn</span><a href="https://www.linkedin.com/in/wadaln3ma">in/wadaln3ma</a></span>
+      <span><span class="cap">Code</span><a href="https://github.com/wadaln3ma">github.com/wadaln3ma</a></span>
+      <span><span class="cap">X</span><a href="https://x.com/AAlniema">@AAlniema</a></span>
+      <span><span class="cap">Based in</span>Riyadh, Saudi Arabia</span>
+    </div>
+  </div>
+  <p class="fine">Contours in the header are generated live in your browser. Move across them to read coordinates and elevation.</p>
+</footer>
+
+<script>
+/* ===== Projects: edit this list as each one ships ===== */
+const PROJECTS = [
+  { name:"TerraTrack", status:"In progress",
+    desc:"Real-time vehicle and asset tracking dashboard. Simulated fleets stream positions over SignalR, and the map shows live routes, geofence alerts and trip history.",
+    stack:"ASP.NET Core, SignalR, EF Core with NetTopologySuite, PostGIS, MapLibre",
+    code:"", demo:"" },
+  { name:"Riyadh Green Pulse", status:"In progress",
+    desc:"Tracks how Riyadh's vegetation and surface temperature have changed since 2017, using Sentinel-2 NDVI and Landsat thermal bands, with a year-by-year comparison map.",
+    stack:"Python, rasterio, STAC, geopandas, React, MapLibre",
+    code:"", demo:"" },
+  { name:"Traverse", status:"In progress",
+    desc:"Surveying calculator that works offline in the field: traverse adjustment (Bowditch and least squares), COGO, area computation and coordinate transformations.",
+    stack:"TypeScript, React, PWA, proj4js",
+    code:"", demo:"" },
+  { name:"SiteScout", status:"In progress",
+    desc:"Site-selection tool that scores locations by weighted criteria such as population, road access and nearby competitors, using OpenStreetMap and WorldPop data.",
+    stack:"Blazor, ASP.NET Core, PostGIS, OpenStreetMap, WorldPop",
+    code:"", demo:"" },
+  { name:"Surveying Manager", status:"Live",
+    desc:"Web app for managing survey jobs, crews and field observations.",
+    stack:"React, Node.js",
+    code:"https://github.com/wadaln3ma/Surveying-Manager", demo:"" },
+  { name:"ADS-B Flight Watch", status:"Live",
+    desc:"Monitors aircraft ADS-B feeds and sends alerts when flights enter a defined area.",
+    stack:"Python",
+    code:"https://github.com/wadaln3ma/plane-notify", demo:"" }
+];
+(function renderProjects(){
+  const ul=document.getElementById("project-list");
+  ul.innerHTML=PROJECTS.map(p=>{
+    const links=[p.demo&&`<a href="${p.demo}">Live demo</a>`,p.code&&`<a href="${p.code}">Code</a>`].filter(Boolean).join("");
+    return `<li class="project">
+      <h3>${p.name}</h3>
+      <p class="desc">${p.desc}</p>
+      <p class="stack">${p.stack}</p>
+      <div class="side"><span class="status ${p.status==="Live"?"live":""}">${p.status}</span>${links?`<div class="links">${links}</div>`:""}</div>
+    </li>`;}).join("");
+})();
+
+/* ===== Contour map: value-noise terrain + marching squares ===== */
+(function(){
+  const cv=document.getElementById("topo"), ctx=cv.getContext("2d");
+  const hero=cv.parentElement, cross=document.getElementById("cross");
+  const latEl=document.getElementById("lat"), lonEl=document.getElementById("lon"), elEl=document.getElementById("elev");
+  const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const CS=9, ZMIN=580, ZMAX=780, STEP=5, INDEX=25;
+  const BBOX={n:24.86,s:24.58,w:46.52,e:46.86};
+  let W,H,cols,rows,F,anim;
+
+  function hash(x,y){let h=Math.imul(x,374761393)+Math.imul(y,668265263)|0;h=Math.imul(h^(h>>>13),1274126177);return((h^(h>>>16))>>>0)/4294967295}
+  const sm=t=>t*t*(3-2*t);
+  function vnoise(x,y){const xi=Math.floor(x),yi=Math.floor(y),xf=sm(x-xi),yf=sm(y-yi);
+    const a=hash(xi,yi),b=hash(xi+1,yi),c=hash(xi,yi+1),d=hash(xi+1,yi+1);
+    return a+(b-a)*xf+(c-a)*yf+(a-b-c+d)*xf*yf}
+  function fbm(x,y){let s=0,a=.5,f=1;for(let o=0;o<5;o++){s+=a*vnoise(x*f+11,y*f+7);a*=.5;f*=2.03}return s}
+
+  function build(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    W=hero.clientWidth;H=hero.clientHeight;
+    cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    cols=Math.ceil(W/CS)+1;rows=Math.ceil(H/CS)+1;F=new Float32Array(cols*rows);
+    const scale=Math.max(W,H)/3.2;let lo=1e9,hi=-1e9;
+    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
+      const x=i*CS,y=j*CS;
+      const v=fbm(x/scale,y/scale)+0.35*(x/W)-0.15*(y/H);
+      F[j*cols+i]=v;if(v<lo)lo=v;if(v>hi)hi=v}
+    for(let k=0;k<F.length;k++)F[k]=ZMIN+(F[k]-lo)/(hi-lo)*(ZMAX-ZMIN);
+  }
+
+  function drawLevel(z){
+    const idx=z%INDEX===0;
+    ctx.strokeStyle=idx?"rgba(232,196,138,.55)":"rgba(70,125,135,.55)";
+    ctx.lineWidth=idx?1.4:0.8;ctx.beginPath();
+    for(let j=0;j<rows-1;j++)for(let i=0;i<cols-1;i++){
+      const a=F[j*cols+i],b=F[j*cols+i+1],c=F[(j+1)*cols+i+1],d=F[(j+1)*cols+i];
+      const k=(a>z?8:0)|(b>z?4:0)|(c>z?2:0)|(d>z?1:0);
+      if(k===0||k===15)continue;
+      const x=i*CS,y=j*CS;
+      const T=[x+CS*(z-a)/(b-a),y], R=[x+CS,y+CS*(z-b)/(c-b)], B=[x+CS*(z-d)/(c-d),y+CS], L=[x,y+CS*(z-a)/(d-a)];
+      const seg=(p,q)=>{ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1])};
+      switch(k){case 1:case 14:seg(L,B);break;case 2:case 13:seg(B,R);break;case 3:case 12:seg(L,R);break;
+        case 4:case 11:seg(T,R);break;case 6:case 9:seg(T,B);break;case 7:case 8:seg(L,T);break;
+        case 5:seg(L,T);seg(B,R);break;case 10:seg(T,R);seg(L,B);break}
+    }
+    ctx.stroke();
+  }
+
+  function render(animate){
+    cancelAnimationFrame(anim);ctx.clearRect(0,0,W,H);
+    const levels=[];for(let z=ZMIN+STEP;z<ZMAX;z+=STEP)levels.push(z);
+    if(!animate){levels.forEach(drawLevel);return}
+    let n=0;const t0=performance.now(),dur=1600;
+    (function tick(t){const target=Math.min(levels.length,Math.ceil((t-t0)/dur*levels.length));
+      while(n<target)drawLevel(levels[n++]);if(n<levels.length)anim=requestAnimationFrame(tick)})(t0);
+  }
+
+  function sample(x,y){
+    const gx=Math.min(cols-1.001,Math.max(0,x/CS)),gy=Math.min(rows-1.001,Math.max(0,y/CS));
+    const i=Math.floor(gx),j=Math.floor(gy),fx=gx-i,fy=gy-j;
+    const a=F[j*cols+i],b=F[j*cols+i+1],c=F[(j+1)*cols+i],d=F[(j+1)*cols+i+1];
+    return a*(1-fx)*(1-fy)+b*fx*(1-fy)+c*(1-fx)*fy+d*fx*fy}
+
+  hero.addEventListener("pointermove",e=>{
+    const r=hero.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+    cross.style.left=x+"px";cross.style.top=y+"px";
+    latEl.textContent=(BBOX.n-(y/H)*(BBOX.n-BBOX.s)).toFixed(5)+"°";
+    lonEl.textContent=(BBOX.w+(x/W)*(BBOX.e-BBOX.w)).toFixed(5)+"°";
+    elEl.textContent=Math.round(sample(x,y));
+  });
+
+  build();render(!reduce);
+  let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{build();render(false)},150)});
+})();
+</script>
+</body>
+</html>
